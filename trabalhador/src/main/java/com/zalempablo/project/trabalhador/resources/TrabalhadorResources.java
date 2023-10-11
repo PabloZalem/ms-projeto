@@ -3,6 +3,9 @@ package com.zalempablo.project.trabalhador.resources;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.core.env.Environment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,11 @@ import com.zalempablo.project.trabalhador.repositories.TrabalhadorRepository;
 @RequestMapping(value = "/trabalhadores")
 public class TrabalhadorResources {
 
+	private static Logger logger = LoggerFactory.getLogger(TrabalhadorResources.class);
+	
+	@Autowired
+	private Environment environment;
+	
 	@Autowired
 	private TrabalhadorRepository trabalhadorRepository;
 
@@ -33,6 +41,8 @@ public class TrabalhadorResources {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Trabalhador> findById(@PathVariable Long id) {
+		logger.info("PORT" + environment.getProperty("local.server.port"));
+		
 		Trabalhador trabalhador = trabalhadorRepository.findById(id).get();
 		return ResponseEntity.ok(trabalhador);
 	}

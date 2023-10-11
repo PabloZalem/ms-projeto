@@ -10,7 +10,6 @@ import com.zalempablo.project.folhadepagamento.entities.Trabalhador;
 
 @Component
 @FeignClient(name="trabalhador"
-			,url="localhost:8001"
 			,path="/trabalhadores")
 public interface TrabalhadorFeignClient {
 
