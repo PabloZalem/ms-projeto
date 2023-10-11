@@ -10,21 +10,17 @@ import org.springframework.web.client.RestTemplate;
 
 import com.zalempablo.project.folhadepagamento.entities.FolhaDePagamento;
 import com.zalempablo.project.folhadepagamento.entities.Trabalhador;
+import com.zalempablo.project.folhadepagamento.feingclient.TrabalhadorFeignClient;
 
 @Service
 public class FolhaDePagamentoService {
-	
-	@Value("${trabalhador.host}")
-	private String trabalhador;
-	
+
 	@Autowired
-	private RestTemplate restTemplate;
-	
+	private TrabalhadorFeignClient trabalhadorFeignClient;
+
 	public FolhaDePagamento getPagamento(long workerId, int dias) {
-		Map<String, String> variaveiesUri = new HashMap<>();
-		variaveiesUri.put("id", ""+workerId);
-		
-		Trabalhador trabalhadores = restTemplate.getForObject(trabalhador+"/trabalhadores/{id}",Trabalhador.class, variaveiesUri);
-		return new FolhaDePagamento(trabalhadores.getNome(),trabalhadores.getGanhaPorDia(), dias);
+
+		Trabalhador trabalhadores = trabalhadorFeignClient.findById(workerId).getBody();
+		return new FolhaDePagamento(trabalhadores.getNome(), trabalhadores.getGanhaPorDia(), dias);
 	}
 }
