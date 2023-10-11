@@ -1,0 +1,3 @@
+INSERT INTO trabalhador (NOME, GANHA_POR_DIA) VALUES ('Bob', 200.0);
+INSERT INTO trabalhador (NOME, GANHA_POR_DIA) VALUES ('Maria', 300.0);
+INSERT INTO trabalhador (NOME, GANHA_POR_DIA) VALUES ('Alex', 250.0);
