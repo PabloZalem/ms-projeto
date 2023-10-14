@@ -25,4 +25,8 @@ public class FolhaDePagamentoResource {
 		return ResponseEntity.ok(folhaDePagamento);
 	}
 	
+	public ResponseEntity<FolhaDePagamento> getPaymentAlternative(Long workerId, Integer days) {
+		FolhaDePagamento payment = new FolhaDePagamento("Brann", 400.0, days);
+		return ResponseEntity.ok(payment);
+	}
 }
