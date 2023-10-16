@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.zalempablo.project.folhadepagamento.entities.Trabalhador;
 
 @Component
-@FeignClient(name="trabalhador"
-			,path="/trabalhadores")
+@FeignClient(name="trabalhador" 
+				,path="/trabalhadores")
 public interface TrabalhadorFeignClient {
 
 	@GetMapping(value = "/{id}")
