@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.zalempablo.project.folhadepagamento.entities.FolhaDePagamento;
 import com.zalempablo.project.folhadepagamento.service.FolhaDePagamentoService;
 
@@ -17,16 +18,24 @@ public class FolhaDePagamentoResource {
 	@Autowired
 	private FolhaDePagamentoService folhaDePagamentoService;
 	
-	
+	@HystrixCommand(fallbackMethod = "getPagamentoAlternativo")
 	@GetMapping(value = "/{trabalhador}/dias/{dias}")
 	public ResponseEntity<FolhaDePagamento> getPagamento(@PathVariable Long trabalhador
 														,@PathVariable Integer dias){
+		/*
+		try {
+			Thread.sleep(3000L);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		*/
 		FolhaDePagamento folhaDePagamento = folhaDePagamentoService.getPagamento(trabalhador, dias);
 		return ResponseEntity.ok(folhaDePagamento);
 	}
 	
-	public ResponseEntity<FolhaDePagamento> getPaymentAlternative(Long workerId, Integer days) {
-		FolhaDePagamento payment = new FolhaDePagamento("Brann", 400.0, days);
+	public ResponseEntity<FolhaDePagamento> getPagamentoAlternativo(Long trabalhador, Integer dias) {
+		FolhaDePagamento payment = new FolhaDePagamento("Brann", 400.0, dias);
 		return ResponseEntity.ok(payment);
 	}
+
 }
