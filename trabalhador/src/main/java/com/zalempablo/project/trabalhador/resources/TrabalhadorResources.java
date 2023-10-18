@@ -3,10 +3,12 @@ package com.zalempablo.project.trabalhador.resources;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.core.env.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,11 +23,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.zalempablo.project.trabalhador.entities.Trabalhador;
 import com.zalempablo.project.trabalhador.repositories.TrabalhadorRepository;
 
+@RefreshScope
 @RestController
 @RequestMapping(value = "/trabalhadores")
 public class TrabalhadorResources {
 
 	private static Logger logger = LoggerFactory.getLogger(TrabalhadorResources.class);
+	
+	@Value("${test.config}")
+	private String testConfig;
 	
 	@Autowired
 	private Environment environment;
@@ -33,6 +39,12 @@ public class TrabalhadorResources {
 	@Autowired
 	private TrabalhadorRepository trabalhadorRepository;
 
+	@GetMapping(value="/configs")
+	public ResponseEntity<Void> getConfig() {
+		logger.info("CONFIG = " + testConfig);
+		return ResponseEntity.noContent().build();
+	}
+	
 	@GetMapping
 	public ResponseEntity<List<Trabalhador>> findAll() {
 		List<Trabalhador> list = trabalhadorRepository.findAll();
