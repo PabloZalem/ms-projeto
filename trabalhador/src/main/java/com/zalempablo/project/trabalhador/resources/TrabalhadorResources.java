@@ -30,8 +30,8 @@ public class TrabalhadorResources {
 
 	private static Logger logger = LoggerFactory.getLogger(TrabalhadorResources.class);
 	
-	@Value("${test.config}")
-	private String testConfig;
+	//@Value("${test.config}")
+	//private String testConfig;
 	
 	@Autowired
 	private Environment environment;
@@ -41,7 +41,7 @@ public class TrabalhadorResources {
 
 	@GetMapping(value="/configs")
 	public ResponseEntity<Void> getConfig() {
-		logger.info("CONFIG = " + testConfig);
+		logger.info("CONFIG = My config value default profile");
 		return ResponseEntity.noContent().build();
 	}
 	
